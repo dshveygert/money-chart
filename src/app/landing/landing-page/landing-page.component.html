@@ -1,1 +1,11 @@
-<p>landing-page works!</p>
+<div class="tui-container tui-container_adaptive">
+  <div class="tui-row tui-row_adaptive">
+    <div class="tui-col_xs-12 tui-col_md-12 tui-col_lg-12">
+      <tui-tabs>
+        <ng-container *ngFor="let tab of tabs;trackBy: trackBy">
+          <a tuiTab routerLink='{{tab.link}}' routerLinkActive>{{tab.name}}</a>
+        </ng-container>
+      </tui-tabs>
+    </div>
+  </div>
+</div>

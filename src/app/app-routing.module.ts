@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChartPageComponent } from './chart/chart-page/chart-page.component';
 import { LandingPageComponent } from './landing/landing-page/landing-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ShareModule } from "./share/share.module";
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent},
@@ -14,8 +15,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes), ShareModule],
+  exports: [RouterModule],
+  declarations: [LandingPageComponent, ChartPageComponent, PageNotFoundComponent]
 })
 export class AppRoutingModule {
 

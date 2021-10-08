@@ -1,0 +1,10 @@
+<div class="upload-file">
+  <tui-input-file
+    class="container"
+    link="Choose a *.csv file"
+    accept=".csv"
+    [formControl]="control"
+    [loadingFiles]="loading$ | async"
+    [rejectedFiles]="rejected$ | async"
+  ></tui-input-file>
+</div>
