@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiInputFileModule, TuiTabsModule } from '@taiga-ui/kit';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 const components = [
@@ -12,7 +13,8 @@ const modules = [
   ReactiveFormsModule,
   FormsModule,
   TuiInputFileModule,
-  TuiTabsModule];
+  TuiTabsModule,
+  NgxCsvParserModule];
 
 @NgModule({
   declarations: [

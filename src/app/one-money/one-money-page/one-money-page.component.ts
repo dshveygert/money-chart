@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {NgxCsvParser} from 'ngx-csv-parser';
 
 @Component({
   selector: 'app-one-money-page',
@@ -7,14 +8,17 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OneMoneyPageComponent implements OnInit {
+  private header = false;
 
   uploadFile(file: string): void {
     console.log('uploadFile', file);
+    const json = this.ngxCsvParser.csvStringToArray(file, ',' );
+    console.log('json',json);
   }
-
-  constructor() { }
 
   ngOnInit(): void {
   }
+
+  constructor(private ngxCsvParser: NgxCsvParser) { }
 
 }

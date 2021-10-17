@@ -3,7 +3,7 @@ import {FormControl} from '@angular/forms';
 import {tuiPure} from '@taiga-ui/cdk';
 import {TuiFileLike} from '@taiga-ui/kit';
 import {Observable, SubscriptionLike, of} from 'rxjs';
-import {map, startWith, switchMap, tap} from 'rxjs/operators';
+import {map, share, startWith, switchMap, tap} from 'rxjs/operators';
 import {readFile} from '../../../../utils/rx-file-reader';
 
 class RejectedFile {
@@ -53,7 +53,7 @@ export class UploadFileComponent implements OnInit, OnDestroy{
 
   @tuiPure
   private get requests$(): Observable<RejectedFile | File | null> {
-    return this.control.valueChanges;
+    return this.control.valueChanges.pipe(switchMap(() => of(null)), share());
   }
 
   ngOnInit(): void {
