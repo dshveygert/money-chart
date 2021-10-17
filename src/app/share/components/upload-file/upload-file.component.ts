@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {tuiPure} from '@taiga-ui/cdk';
 import {TuiFileLike} from '@taiga-ui/kit';
-import {Observable, of} from 'rxjs';
-import {map, share, startWith, switchMap, tap} from 'rxjs/operators';
+import {Observable, SubscriptionLike, of} from 'rxjs';
+import {map, startWith, switchMap, tap} from 'rxjs/operators';
+import {readFile} from '../../../../utils/rx-file-reader';
 
 class RejectedFile {
   constructor(readonly file: TuiFileLike, readonly reason: string) {}
@@ -24,14 +25,16 @@ function convertRejected({file, reason}: RejectedFile): TuiFileLike {
   styleUrls: ['./upload-file.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UploadFileComponent {
+export class UploadFileComponent implements OnInit, OnDestroy{
+  @Output() uploadFile: EventEmitter<string> = new EventEmitter<string>();
   readonly control = new FormControl();
+  private readSub: SubscriptionLike | undefined;
 
   @tuiPure
   get loading$(): Observable<any> {
     return this.requests$.pipe(
       map(file => (file instanceof File ? [file] : [])),
-      startWith([]),
+      startWith([])
     );
   }
 
@@ -50,19 +53,27 @@ export class UploadFileComponent {
 
   @tuiPure
   private get requests$(): Observable<RejectedFile | File | null> {
-    return this.control.valueChanges.pipe(
-      tap(f => {
-        console.log('f', f);
-        const reader = new FileReader();
-        reader.onload = this.handleFileRead;
-        reader.readAsText(f);
-      }),
-      switchMap(() => of(null)),
-      share(),
-    );
+    return this.control.valueChanges;
   }
 
-  private  handleFileRead = (event: any): void => {
-    console.log(event?.target?.result);
+  ngOnInit(): void {
+    this.readSub = this.requests$.pipe(
+      switchMap(file => {
+        if (file instanceof File) {
+          return readFile(file);
+        } else {
+          return of();
+        }
+      }),
+      tap(text => {
+        this.uploadFile?.emit(text as unknown as string);
+      })
+    ).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.readSub?.unsubscribe();
+  }
+  constructor() {
   }
 }

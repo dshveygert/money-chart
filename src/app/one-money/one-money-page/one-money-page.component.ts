@@ -8,6 +8,10 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 })
 export class OneMoneyPageComponent implements OnInit {
 
+  uploadFile(file: string): void {
+    console.log('uploadFile', file);
+  }
+
   constructor() { }
 
   ngOnInit(): void {
