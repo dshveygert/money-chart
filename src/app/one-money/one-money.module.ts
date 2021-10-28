@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { OneMoneyPageComponent } from './one-money-page/one-money-page.component';
 import { RouterModule, Routes } from '@angular/router';
-import { ShareModule } from "../share/share.module";
+import { OneMoneyPageComponent } from './one-money-page/one-money-page.component';
+import { ShareModule } from '../share/share.module';
+import { OneMoneyStorageService } from "./services/one-money-storage.service";
 
 
 const routes: Routes = [
@@ -12,17 +12,18 @@ const routes: Routes = [
   }
 ];
 
+const components = [OneMoneyPageComponent];
+const services = [OneMoneyStorageService];
+
 @NgModule({
-  declarations: [
-    OneMoneyPageComponent
-  ],
+  declarations: components,
   imports: [
-    CommonModule,
     RouterModule.forChild(routes),
     ShareModule
   ],
   exports: [
     RouterModule
-  ]
+  ],
+  providers: services
 })
 export class OneMoneyModule { }

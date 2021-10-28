@@ -34,6 +34,7 @@ export class UploadFileComponent implements OnInit, OnDestroy{
   get loading$(): Observable<any> {
     return this.requests$.pipe(
       map(file => (file instanceof File ? [file] : [])),
+      map(() => []), // to hide loader in tui component
       startWith([])
     );
   }
@@ -53,7 +54,7 @@ export class UploadFileComponent implements OnInit, OnDestroy{
 
   @tuiPure
   private get requests$(): Observable<RejectedFile | File | null> {
-    return this.control.valueChanges.pipe(switchMap(() => of(null)), share());
+    return this.control.valueChanges.pipe(switchMap((file) => of(file)), share());
   }
 
   ngOnInit(): void {

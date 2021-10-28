@@ -1,9 +1,9 @@
 {
   "name": "money-chart",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 7000",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -29,6 +29,7 @@
     "@taiga-ui/core": "^2.19.0",
     "@taiga-ui/icons": "^2.19.0",
     "@taiga-ui/kit": "^2.19.0",
+    "moment": "^2.29.1",
     "ngx-csv-parser": "^0.0.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
