@@ -4,7 +4,7 @@ import {tuiPure} from '@taiga-ui/cdk';
 import {TuiFileLike} from '@taiga-ui/kit';
 import {Observable, SubscriptionLike, of} from 'rxjs';
 import {map, share, startWith, switchMap, tap} from 'rxjs/operators';
-import {readFile} from '../../../../utils/rx-file-reader';
+import { readFile } from 'src/utils';
 
 class RejectedFile {
   constructor(readonly file: TuiFileLike, readonly reason: string) {}
@@ -25,10 +25,11 @@ function convertRejected({file, reason}: RejectedFile): TuiFileLike {
   styleUrls: ['./upload-file.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UploadFileComponent implements OnInit, OnDestroy{
-  @Output() uploadFile: EventEmitter<string> = new EventEmitter<string>();
+export class UploadFileComponent implements OnInit, OnDestroy {
+  @Output() uploadFile: EventEmitter<{fileData: string, name: string}> = new EventEmitter<{fileData: string, name: string}>();
   readonly control = new FormControl();
   private readSub: SubscriptionLike | undefined;
+  private fileName: string = '';
 
   @tuiPure
   get loading$(): Observable<any> {
@@ -61,13 +62,15 @@ export class UploadFileComponent implements OnInit, OnDestroy{
     this.readSub = this.requests$.pipe(
       switchMap(file => {
         if (file instanceof File) {
+          console.log('file', file.name);
+          this.fileName = file.name;
           return readFile(file);
         } else {
           return of();
         }
       }),
       tap(text => {
-        this.uploadFile?.emit(text as unknown as string);
+        this.uploadFile?.emit({fileData: text as unknown as string, name: this.fileName});
       })
     ).subscribe();
   }

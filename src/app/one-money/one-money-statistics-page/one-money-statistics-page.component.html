@@ -1,0 +1,11 @@
+<div class="tui-row tui-space_top-5">
+  <div class="tui-col_md-10">
+    <app-time-period-filter></app-time-period-filter>
+  </div>
+  <div class="tui-col_md-2">
+    <app-category-list></app-category-list>
+  </div>
+</div>
+<div>
+  {{data.filteredData$|async|json}}
+</div>

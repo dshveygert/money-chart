@@ -1,5 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {OneMoneyStorageService} from "../services/one-money-storage.service";
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {ApplicationNames} from '../../api/models';
+import {OneMoneyStorageService} from '../services/one-money-storage.service';
+import {LocalStorageService} from '../../share/services/local-storage.service';
 
 @Component({
   selector: 'app-one-money-page',
@@ -7,15 +10,21 @@ import {OneMoneyStorageService} from "../services/one-money-storage.service";
   styleUrls: ['./one-money-page.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OneMoneyPageComponent implements OnInit {
+export class OneMoneyPageComponent {
 
-  uploadFile(file: string): void {
-    this.storage.init(file);
+  uploadFile(data: {fileData: string, name: string}): void {
+    this.storage.init(data, ApplicationNames.money);
+    this.router.navigate([`/chart/1money/statistics`]).then();
   }
 
-  ngOnInit(): void {
+  get hasDataInLocalStorage(): boolean {
+    return !!this.ls.getLocalStorageItem(ApplicationNames.money)
   }
 
-  constructor(private storage: OneMoneyStorageService) { }
+  get fileName(): string {
+    return this.hasDataInLocalStorage && this.ls.getLocalRecord(ApplicationNames.money)?.file_name || '';
+  }
+
+  constructor(private storage: OneMoneyStorageService, private ls: LocalStorageService, private router: Router) { }
 
 }

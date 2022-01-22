@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import {startWith} from 'rxjs/operators';
-import {DataItem, Record, Type} from '../../api/models';
-import {CsvParser, moment} from '../../../utils';
+import {ApplicationData, ApplicationNames, DataItem, Record, Type} from '../../api/models';
+import {CsvParser, dateFormat, moment, sortByDate} from '../../../utils';
+import {LocalStorageService} from '../../share/services/local-storage.service';
+import {DataRecordService} from '../../share/services/data-record.service';
 
 enum EType {
   Expense = 'Expense',
@@ -18,6 +20,7 @@ export class OneMoneyStorageService {
   private _headers$: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
   private defaultHeaders: string[] = ['DATE','TYPE','FROM ACCOUNT','TO ACCOUNT / TO CATEGORY','AMOUNT','CURRENCY','AMOUNT 2','CURRENCY 2','TAGS','NOTES'];
   private recordLength = 10;
+  private appDateFormat = 'MM/DD/YY';
 
   get headers(): string[] {
     return this._headers;
@@ -33,7 +36,7 @@ export class OneMoneyStorageService {
     this._headers$.next(this._headers);
   }
 
-  private dataConverter(json: string[][]): void {
+  private dataConverter(json: string[][]): ApplicationData {
     const recordItem: any = {};
     const category: DataItem[] = [];
     let categoryLength = 0;
@@ -48,7 +51,7 @@ export class OneMoneyStorageService {
         const indexOfCurrencyTwo = currency.findIndex(c => c.name === item[7]);
         const indexOfAccount = account.findIndex(c => c.name === item[2]);
         if (indexOfCurrency < 0) {
-          const cur = {id: currencyLength, name: item[5]};
+          const cur = {id: currencyLength + 1, name: item[5]};
           currency.push(cur);
           currencyLength++;
           recordItem['currency_id'] = currencyLength;
@@ -58,7 +61,7 @@ export class OneMoneyStorageService {
           recordItem['currency'] = currency[indexOfCurrency].name;
         }
         if (indexOfCurrencyTwo < 0) {
-          const cur = {id: currencyLength, name: item[7]};
+          const cur = {id: currencyLength + 1, name: item[7]};
           currency.push(cur);
           currencyLength++;
           recordItem['currency_two_id'] = currencyLength;
@@ -68,7 +71,7 @@ export class OneMoneyStorageService {
           recordItem['currency_two'] = currency[indexOfCurrencyTwo].name;
         }
         if (indexOfAccount < 0) {
-          account.push({id: accountLength, name: item[2]});
+          account.push({id: accountLength + 1, name: item[2]});
           accountLength++;
           recordItem['from_account_id'] = accountLength;
         } else {
@@ -77,7 +80,7 @@ export class OneMoneyStorageService {
         if (item[1] === EType.Transfer) {
           const indexOfAccount = account.findIndex(c => c.name === item[3]);
           if (indexOfAccount < 0) {
-            account.push({id: accountLength, name: item[3]});
+            account.push({id: accountLength + 1, name: item[3]});
             accountLength++;
             recordItem['to_account_id'] = accountLength;
           } else {
@@ -88,14 +91,14 @@ export class OneMoneyStorageService {
           const cat = item[3].trim().split(' (');
           const indexOfParentCategory = category.findIndex(c => c.name === cat[0]);
           if (indexOfParentCategory < 0) {
-            category.push({id: categoryLength, name: cat[0], parent_id: null});
+            category.push({id: categoryLength + 1, name: cat[0], parent_id: null});
             categoryLength++;
           }
           if (cat?.length === 2) {
             const indexOfParentCategory = category.findIndex(c => c.name === cat[0]);
             const indexOfCategory = category.findIndex(c => c.name === cat[1].replace(')', ''));
             if (indexOfCategory < 0) {
-              category.push({id: categoryLength, name: cat[1].replace(')', ''), parent_id: indexOfParentCategory});
+              category.push({id: categoryLength + 1, name: cat[1].replace(')', ''), parent_id: indexOfParentCategory + 1});
               categoryLength++;
             }
           }
@@ -104,8 +107,8 @@ export class OneMoneyStorageService {
         }
         const type = item[1] === EType.Transfer ? Type.transfer : item[1] === EType.Expense ? Type.out : Type.in;
         record.push({
-          id: i,
-          date: moment(item[0], 'MM/DD/YY').format('DD.MM.YYYY'),
+          id: i + 1,
+          date: moment(item[0], this.appDateFormat).format(dateFormat),
           type: type,
           amount: +item[4],
           amount_two: +item[6],
@@ -114,20 +117,19 @@ export class OneMoneyStorageService {
         });
       }
     })
-    console.log('currency ', currency);
-    console.log('account ', account);
-    console.log('category ', category);
-    console.log('record ', record);
+    return {data: sortByDate(record), currency, account, category};
   }
 
-  public init(file: string): void {
+  public init(data: {name: string, fileData: string}, app: ApplicationNames): void {
+    const {name, fileData} = data;
     try {
       this.loading = true;
-      const json = this.csvParser.csvStringToArray(file, ',' );
+      const json = this.csvParser.csvStringToArray(fileData, ',' );
       this.headers = json?.length > 0 ? json[0] : [];
       json.splice(0, 1);
-      this.dataConverter(json);
-      console.log('json', json);
+      const data = this.dataConverter(json);
+      this.ls.setLocalRecord(app, data, name);
+      this.data.openStatistics(app, data.data);
     } catch (e) {
       console.log('OneMoneyStorageService: File data is not valid.');
     } finally {
@@ -148,5 +150,5 @@ export class OneMoneyStorageService {
     return this._loading$.pipe(startWith(this._loading));
   }
 
-  constructor(private csvParser: CsvParser) { }
+  constructor(private csvParser: CsvParser, private ls: LocalStorageService, private data: DataRecordService) { }
 }

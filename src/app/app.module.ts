@@ -1,10 +1,10 @@
-import { TuiRootModule, TuiDialogModule, TuiNotificationsModule } from "@taiga-ui/core";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ShareModule} from './share/share.module';
 
 @NgModule({
   declarations: [
@@ -14,10 +14,8 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
     BrowserModule,
     AppRoutingModule,
     NoopAnimationsModule,
-    TuiRootModule,
     BrowserAnimationsModule,
-    TuiDialogModule,
-    TuiNotificationsModule
+    ShareModule
 ],
   providers: [],
   bootstrap: [AppComponent]

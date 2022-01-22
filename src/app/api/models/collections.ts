@@ -6,7 +6,7 @@ export interface DataItem {
 
 export interface Record {
   id: number;
-  date: Date | string;
+  date: string;
   type: Type;
   from_account_id: number;
   to_account_id: number;
@@ -20,8 +20,29 @@ export interface Record {
   note: string;
 }
 
+export interface ApplicationData {
+  data: Record[];
+  currency: DataItem[];
+  account: DataItem[];
+  category: DataItem[];
+}
+
 export enum Type {
   in = 'in',
   out = 'out',
   transfer = 'transfer'
 }
+
+export interface Limits {
+  from: string;
+  to: string;
+}
+
+export interface LocalStorageData extends ApplicationData {
+  app: string;
+  file_name?: string;
+  created_at: string | Date;
+}
+
+export type PeriodUnit = 'year' | 'month' | 'day';
+export const DateFormat = 'YYYY.MM.DD'

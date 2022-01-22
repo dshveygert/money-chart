@@ -7,7 +7,6 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingPageComponent implements OnInit {
-  // tab: {id: number, link: string, name: string};
   tabs: ReadonlyArray<{id: number, link: string, name: string}> = [
     {id: 0, link: 'chart/1money', name: '1Money'}
   ];

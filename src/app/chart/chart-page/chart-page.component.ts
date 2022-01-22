@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../share/services/settings.service';
 
 @Component({
   selector: 'app-chart-page',
@@ -8,7 +9,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 })
 export class ChartPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public settings: SettingsService) { }
 
   ngOnInit(): void {
   }
