@@ -1,4 +1,7 @@
-<p>category-list works!</p>
-<div>
-  {{categories.data$|async|json}}
-</div>
+<tui-badge
+  *ngFor="let cat of categories.filteredData$(this.data.filteredData$)|async; let i = index"
+  status="custom"
+  [value]="value(cat)"
+  [class]="valueClass(cat, i)"
+  [hoverable]="true"
+></tui-badge>

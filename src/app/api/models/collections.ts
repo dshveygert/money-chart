@@ -4,6 +4,10 @@ export interface DataItem {
   parent_id?: number | null;
 }
 
+export interface Item extends DataItem {
+  active: boolean;
+}
+
 export interface Record {
   id: number;
   date: string;

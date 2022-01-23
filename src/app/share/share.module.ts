@@ -8,7 +8,7 @@ import {
   TuiDialogModule,
   TuiNotificationsModule
 } from '@taiga-ui/core';
-import { TuiCalendarMonthModule, TuiInputFileModule, TuiTabsModule,
+import { TuiCalendarMonthModule, TuiInputFileModule, TuiTabsModule, TuiBadgeModule,
 TuiIslandModule } from '@taiga-ui/kit';
 import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
@@ -17,7 +17,8 @@ import { CategoryListComponent } from './components/category-list/category-list.
 
 const components = [UploadFileComponent, TimePeriodFilterComponent, CategoryListComponent];
 const modules = [CommonModule, ReactiveFormsModule, FormsModule, TuiInputFileModule, TuiTabsModule, NgxCsvParserModule,
-  TuiCalendarMonthModule, TuiIslandModule, TuiButtonModule, TuiRootModule, TuiDialogModule, TuiNotificationsModule];
+  TuiCalendarMonthModule, TuiIslandModule, TuiButtonModule, TuiRootModule, TuiDialogModule, TuiNotificationsModule,
+  TuiBadgeModule];
 
 @NgModule({
   declarations: [
