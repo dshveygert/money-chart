@@ -5,3 +5,5 @@ export function sortByDate(list: Record[]): Record[] {
 }
 
 export const dateFormat = 'YYYY.MM.DD';
+export const monthFormat = 'MM.DD';
+export const dayFormat = 'DD';

@@ -1,11 +1,19 @@
 <div class="tui-row tui-space_top-5">
   <div class="tui-col_md-8">
     <app-time-period-filter></app-time-period-filter>
+    <ng-container *ngIf='chartData$|async as data'>
+      <ng-container *ngIf="!!data && data.data.length > 0">
+        <app-bar-chart [data]="data"></app-bar-chart>
+        <p>{{data|json}}</p>
+      </ng-container>
+    </ng-container>
+
   </div>
   <div class="tui-col_md-4">
     <app-category-list></app-category-list>
   </div>
 </div>
-<div>
+
+<pre>
   {{data.filteredData$|async|json}}
-</div>
+</pre>
