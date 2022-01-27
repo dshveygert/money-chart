@@ -51,6 +51,7 @@ export class OneMoneyStorageService {
         const indexOfCurrencyTwo = currency.findIndex(c => c.name === item[7]);
         const indexOfAccount = account.findIndex(c => c.name === item[2]);
         if (indexOfCurrency < 0) {
+          console.log('indexOfCurrency', item[5]);
           const cur = {id: currencyLength + 1, name: item[5]};
           currency.push(cur);
           currencyLength++;
@@ -61,11 +62,17 @@ export class OneMoneyStorageService {
           recordItem['currency'] = currency[indexOfCurrency].name;
         }
         if (indexOfCurrencyTwo < 0) {
-          const cur = {id: currencyLength + 1, name: item[7]};
-          currency.push(cur);
-          currencyLength++;
-          recordItem['currency_two_id'] = currencyLength;
-          recordItem['currency_two'] = cur.name;
+          console.log('indexOfCurrencyTwo', item[7]);
+          if (indexOfCurrency < 0) {
+            recordItem['currency_two_id'] = currency[currencyLength - 1].id;
+            recordItem['currency_two'] = currency[currencyLength - 1].name;
+          } else {
+            const cur = {id: currencyLength + 1, name: item[7]};
+            currency.push(cur);
+            currencyLength++;
+            recordItem['currency_two_id'] = currencyLength;
+            recordItem['currency_two'] = cur.name;
+          }
         } else {
           recordItem['currency_two_id'] = currency[indexOfCurrencyTwo].id;
           recordItem['currency_two'] = currency[indexOfCurrencyTwo].name;
@@ -131,7 +138,7 @@ export class OneMoneyStorageService {
       this.ls.setLocalRecord(app, data, name);
       this.data.openStatistics(app, data.data);
     } catch (e) {
-      console.log('OneMoneyStorageService: File data is not valid.');
+      console.log('OneMoneyStorageService: File data is not valid.', e);
     } finally {
       this.loading = false;
     }

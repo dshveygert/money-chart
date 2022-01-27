@@ -6,10 +6,14 @@ import {
   TUI_BUTTON_OPTIONS,
   TuiRootModule,
   TuiDialogModule,
-  TuiNotificationsModule
+  TuiNotificationsModule,
+  TuiDataListModule,
+  TuiLoaderModule,
+  TuiTextfieldControllerModule
 } from '@taiga-ui/core';
+import {TuiLetModule} from "@taiga-ui/cdk";
 import { TuiCalendarMonthModule, TuiInputFileModule, TuiTabsModule, TuiBadgeModule,
-TuiIslandModule } from '@taiga-ui/kit';
+TuiIslandModule, TuiDataListWrapperModule, TuiSelectModule } from '@taiga-ui/kit';
 import {TuiAxesModule, TuiBarModule, TuiBarChartModule, TuiLineDaysChartModule} from '@taiga-ui/addon-charts';
 import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
@@ -20,7 +24,8 @@ import { BarChartComponent } from './components/charts/bar-chart/bar-chart.compo
 const components = [UploadFileComponent, TimePeriodFilterComponent, CategoryListComponent, BarChartComponent];
 const modules = [CommonModule, ReactiveFormsModule, FormsModule, TuiInputFileModule, TuiTabsModule, NgxCsvParserModule,
   TuiCalendarMonthModule, TuiIslandModule, TuiButtonModule, TuiRootModule, TuiDialogModule, TuiNotificationsModule,
-  TuiBadgeModule, TuiBarChartModule, TuiLineDaysChartModule, TuiAxesModule, TuiBarModule];
+  TuiBadgeModule, TuiBarChartModule, TuiLineDaysChartModule, TuiAxesModule, TuiBarModule, TuiDataListModule,
+  TuiDataListWrapperModule, TuiSelectModule, TuiLoaderModule, TuiLetModule, TuiTextfieldControllerModule];
 
 @NgModule({
   declarations: [

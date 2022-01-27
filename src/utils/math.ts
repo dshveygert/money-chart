@@ -1,7 +1,7 @@
 import {Record, Type} from '../app/api/models';
 import {dateFormat, moment} from './';
 
-export function sumAmountsByDay(list: Record[] = [], timeFormat = dateFormat): {day: string, sum: number}[] {
+export function sumAmountsByDay(list: Record[] = [], timeFormat = dateFormat, currency = 'USD'): {day: string, sum: number}[] {
   const length = list.length
   if (length <= 0) {
     // @ts-ignore
@@ -12,52 +12,17 @@ export function sumAmountsByDay(list: Record[] = [], timeFormat = dateFormat): {
   let sum = 0;
   list.forEach((item, i) => {
     if (date === item.date) {
-      sum += item.amount;
+      sum += item.currency === currency ? item.amount : item.currency_two === currency ? item.amount_two : 0;
     } else {
-      result.push({day: moment(date).format(timeFormat), sum});
-      sum = item.amount;
+      result.push({day: moment(date).format(timeFormat), sum: +sum.toFixed(2)});
+      sum = item.currency === currency ? item.amount : item.currency_two === currency ? item.amount_two : 0;
       date = item.date;
     }
     if (i === length - 1) {
-      result.push({day: moment(date).format(timeFormat), sum});
+      result.push({day: moment(date).format(timeFormat), sum: +sum.toFixed(2)});
     }
   })
   return result;
-  // let sum = list[0].amount;
-  // let i = 0;
-  // const days: string[] = [list[0].date];
-  // const firstDay = moment(list[0].date);
-  // const lastDay = moment(list[length-1].date);
-  // const daysNumber = getNumberOfDays(list[0].date, list[length-1].date);
-  // console.log('daysNumber', daysNumber);
-  // for (let step = 1; step < length; step++) {
-  //   const period = getNumberOfDays(list[step - 1].date, list[step].date);
-  //   if (period > 0) {
-  //
-  //   }
-  //   const date = moment(list[0].date).add(step, 'days').format(dateFormat);
-  //
-  //   console.log('day', step);
-  // }
-  // do {
-  //   const date = moment(list[0].date).add(i, 'days').format(dateFormat);
-  //   days.push(date);
-  //   if ()
-  //   const record = list[i];
-  //   if (record.type === type) {
-  //     sum += record.amount;
-  //   }
-  //
-  //   console.log('day', i, date);
-  //   i += 1;
-  // } while (i < daysNumber);
-
-  // list.forEach(record => {
-  //    if (record.type === type) {
-  //      sum += record.amount;
-  //    }
-  // })
-  // return {sum, days};
 }
 
 export function getNumberOfDays(start: string, end: string): number {
