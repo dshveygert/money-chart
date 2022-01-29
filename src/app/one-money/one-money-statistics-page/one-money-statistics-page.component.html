@@ -10,20 +10,7 @@
 
   </div>
   <div class="tui-col_md-4">
-    <tui-select
-      *tuiLet="currencies.data$ | async as items"
-      class="b-form"
-      [tuiTextfieldLabelOutside]="true"
-      [(ngModel)]="currencies.selected"
-    >
-      <ng-template tuiDataList>
-        <tui-data-list *ngIf="items">
-          <button *ngFor="let item of items" tuiOption [value]="item.name">
-            {{item.name}}
-          </button>
-        </tui-data-list>
-      </ng-template>
-    </tui-select>
+    <app-currency-selector class="tui-space_bottom-5"></app-currency-selector>
     <app-category-list></app-category-list>
     <div>Accounts {{accounts.data$|async|json}}</div>
   </div>
