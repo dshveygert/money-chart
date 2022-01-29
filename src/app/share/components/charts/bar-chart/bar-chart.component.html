@@ -1,9 +1,11 @@
-<tui-axes class="axes" [axisXLabels]="data.labelX" [axisYLabels]="data.labelY">
-  <tui-bar-chart [max]="max" [value]="data.data" [hintContent]="hint"></tui-bar-chart>
-</tui-axes>
-<ng-template #hint let-setIndex>
-  <p *ngFor="let item of data.data; let index = index" class="hint">
-    <span class="dot">{{item[setIndex]}}</span>
-    <span class="name"></span>
-  </p>
-</ng-template>
+<div class="m-chart">
+  <tui-axes class="axes" [axisXLabels]="data.labelX" [axisYLabels]="data.labelY">
+    <tui-bar-chart [max]="max" [value]="data.data" [hintContent]="hint"></tui-bar-chart>
+  </tui-axes>
+  <ng-template #hint let-setIndex>
+    <p *ngFor="let item of data.data; let index = index" class="hint">
+      <span class="dot">{{item[setIndex]}}</span>
+      <span class="name"></span>
+    </p>
+  </ng-template>
+</div>

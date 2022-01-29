@@ -3,7 +3,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.sass'],
+  styleUrls: ['./landing-page.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingPageComponent implements OnInit {

@@ -6,7 +6,7 @@ import {DataRecordService} from "../../services/data-record.service";
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.sass'],
+  styleUrls: ['./category-list.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoryListComponent implements OnInit {
@@ -16,7 +16,7 @@ export class CategoryListComponent implements OnInit {
     return item.name;
   }
   public valueClass(item: Item, i: number): string {
-    return `tui-space_horizontal-2 tui-space_vertical-2 support-0${!item.active ? '0' : item.id <= 20 ? item.id : 21}`;
+    return `tui-space_horizontal-2 tui-space_vertical-2 support-${!item.active ? '0' : item.id <= 20 ? item.id : 21}`;
   }
 
   ngOnInit(): void {

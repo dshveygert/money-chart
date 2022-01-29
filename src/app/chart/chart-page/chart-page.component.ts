@@ -4,7 +4,7 @@ import {SettingsService} from '../../share/services/settings.service';
 @Component({
   selector: 'app-chart-page',
   templateUrl: './chart-page.component.html',
-  styleUrls: ['./chart-page.component.sass'],
+  styleUrls: ['./chart-page.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartPageComponent implements OnInit {

@@ -14,7 +14,7 @@ import {CurrenciesService} from "../../share/services/currencies.service";
 @Component({
   selector: 'app-one-money-statistics-page',
   templateUrl: './one-money-statistics-page.component.html',
-  styleUrls: ['./one-money-statistics-page.component.sass'],
+  styleUrls: ['./one-money-statistics-page.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OneMoneyStatisticsPageComponent implements OnInit, OnDestroy {

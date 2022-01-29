@@ -5,7 +5,7 @@ import {CurrenciesService} from "../../services/currencies.service";
 @Component({
   selector: 'app-currency-selector',
   templateUrl: './currency-selector.component.html',
-  styleUrls: ['./currency-selector.component.sass']
+  styleUrls: ['./currency-selector.component.less']
 })
 export class CurrencySelectorComponent {
   public item: DataItem;

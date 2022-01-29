@@ -7,7 +7,7 @@ import {LocalStorageService} from '../../share/services/local-storage.service';
 @Component({
   selector: 'app-one-money-page',
   templateUrl: './one-money-page.component.html',
-  styleUrls: ['./one-money-page.component.sass'],
+  styleUrls: ['./one-money-page.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OneMoneyPageComponent {
