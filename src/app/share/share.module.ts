@@ -20,8 +20,10 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { TimePeriodFilterComponent } from './components/time-period-filter/time-period-filter.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
+import { CurrencySelectorComponent } from './components/currency-selector/currency-selector.component';
 
-const components = [UploadFileComponent, TimePeriodFilterComponent, CategoryListComponent, BarChartComponent];
+const components = [UploadFileComponent, TimePeriodFilterComponent, CategoryListComponent, BarChartComponent,
+  CurrencySelectorComponent];
 const modules = [CommonModule, ReactiveFormsModule, FormsModule, TuiInputFileModule, TuiTabsModule, NgxCsvParserModule,
   TuiCalendarMonthModule, TuiIslandModule, TuiButtonModule, TuiRootModule, TuiDialogModule, TuiNotificationsModule,
   TuiBadgeModule, TuiBarChartModule, TuiLineDaysChartModule, TuiAxesModule, TuiBarModule, TuiDataListModule,

@@ -27,7 +27,6 @@ export class OneMoneyStatisticsPageComponent implements OnInit, OnDestroy {
     labelX: [],
     labelY: ['0', '10000']
   };
-  public item: DataItem;
 
   get filteredData$(): Observable<BarChart> {
     return this.data.filteredData$.pipe(filter(d => d?.length > 0), map(d => {
@@ -71,6 +70,6 @@ export class OneMoneyStatisticsPageComponent implements OnInit, OnDestroy {
 
   constructor(private timePeriodFilter: TimePeriodFilterService, public data: DataRecordService,
               private ls: LocalStorageService, private categories: CategoriesService,
-              public accounts: AccountsService, public currencies: CurrenciesService) { }
+              public accounts: AccountsService, private currencies: CurrenciesService) { }
 
 }
