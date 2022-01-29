@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 @Component({
   selector: 'app-time-period-filter',
   templateUrl: './time-period-filter.component.html',
-  styleUrls: ['./time-period-filter.component.sass'],
+  styleUrls: ['./time-period-filter.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimePeriodFilterComponent {

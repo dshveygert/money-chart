@@ -22,7 +22,7 @@ function convertRejected({file, reason}: RejectedFile): TuiFileLike {
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
-  styleUrls: ['./upload-file.component.sass'],
+  styleUrls: ['./upload-file.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UploadFileComponent implements OnInit, OnDestroy {
